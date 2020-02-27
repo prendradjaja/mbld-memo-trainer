@@ -1,9 +1,13 @@
 from __future__ import print_function
 from string import ascii_uppercase
 import random
+import sys
 
 
-NUM_CUBES = 8
+if len(sys.argv) > 1:
+    NUM_CUBES = int(sys.argv[1])
+else:
+    NUM_CUBES = 9
 
 ALL_LETTERS = ascii_uppercase[:-2]
 EDGE_LETTERS = list(set(ALL_LETTERS) - set('KU'))
