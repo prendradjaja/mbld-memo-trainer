@@ -41,7 +41,7 @@ def random_cube(reverse_order=False):
 def random_memo(length, letters):
     result = ''
     for i in range(length):
-        result += random_letter()
+        result += random_letter(letters)
         j = i + 1
         if j % 2 == 0:
             result += ' '
@@ -49,10 +49,10 @@ def random_memo(length, letters):
             result += ' '
     return result.strip()
 
-def random_letter():
+def random_letter(letters):
     result = random_letter.previous_result
     while result == random_letter.previous_result:
-        result = random.choice(ALL_LETTERS)
+        result = random.choice(letters)
     random_letter.previous_result = result
     return result
 
