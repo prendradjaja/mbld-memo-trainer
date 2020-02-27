@@ -1,0 +1,51 @@
+from __future__ import print_function
+from string import ascii_uppercase
+import random
+
+
+NUM_CUBES = 8
+
+ALL_LETTERS = ascii_uppercase[:-2]
+EDGE_LETTERS = list(set(ALL_LETTERS) - set('KU'))
+CORNER_LETTERS = list(set(ALL_LETTERS) - set('AER'))
+
+def random_even_int(minval, maxval):
+    assert minval % 2 == 0 and maxval % 2 == 0
+    spread = maxval - minval
+    return minval + random.randint(0, spread // 2) * 2
+
+def random_cube():
+    parity = random.choice([True, False])
+    num_edges = random_even_int(10, 12)
+    num_corners = random_even_int(6, 8)
+    if parity:
+        num_edges += 1
+        num_corners += 1
+    return (
+        random_memo(num_edges, EDGE_LETTERS) + '\n' +
+        random_memo(num_corners, CORNER_LETTERS) + '\n\n'
+    )
+
+def random_memo(length, letters):
+    result = ''
+    for i in range(length):
+        result += random_letter()
+        j = i + 1
+        if j % 2 == 0:
+            result += ' '
+        if j % 4 == 0:
+            result += ' '
+    return result.strip()
+
+def random_letter():
+    result = random_letter.previous_result
+    while result == random_letter.previous_result:
+        result = random.choice(ALL_LETTERS)
+    random_letter.previous_result = result
+    return result
+
+random_letter.previous_result = None
+
+for i in range(NUM_CUBES):
+    print(str(i + 1) + '.')
+    print(random_cube(), end='')
