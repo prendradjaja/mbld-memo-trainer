@@ -14,17 +14,25 @@ def random_even_int(minval, maxval):
     spread = maxval - minval
     return minval + random.randint(0, spread // 2) * 2
 
-def random_cube():
+def random_cube(reverse_order=False):
     parity = random.choice([True, False])
     num_edges = random_even_int(10, 12)
     num_corners = random_even_int(6, 8)
     if parity:
         num_edges += 1
         num_corners += 1
-    return (
-        random_memo(num_edges, EDGE_LETTERS) + '\n' +
-        random_memo(num_corners, CORNER_LETTERS) + '\n\n'
-    )
+    edges = random_memo(num_edges, EDGE_LETTERS)
+    corners = random_memo(num_corners, CORNER_LETTERS)
+    if not reverse_order:
+        return (
+            edges + '\n' +
+            corners + '\n\n'
+        )
+    else:
+        return (
+            corners + '\n' +
+            edges + '\n\n'
+        )
 
 def random_memo(length, letters):
     result = ''
@@ -46,6 +54,8 @@ def random_letter():
 
 random_letter.previous_result = None
 
-for i in range(NUM_CUBES):
+for i in range(NUM_CUBES - 1):
     print(str(i + 1) + '.')
     print(random_cube(), end='')
+print(str(NUM_CUBES) + '.')
+print(random_cube(True), end='')
