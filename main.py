@@ -4,6 +4,11 @@ import random
 import sys
 
 
+# TODO
+# - Use arg parser
+# - Make last cube swap optional
+
+
 if len(sys.argv) > 1:
     NUM_CUBES = int(sys.argv[1])
 else:
@@ -50,11 +55,13 @@ def random_memo(length, letters):
     return result.strip()
 
 def random_letter(letters):
+    random_letter.num_calls += 1
     result = random_letter.previous_result
     while result == random_letter.previous_result:
         result = random.choice(letters)
     random_letter.previous_result = result
     return result
+random_letter.num_calls = 0
 
 random_letter.previous_result = None
 
@@ -63,3 +70,5 @@ for i in range(NUM_CUBES - 1):
     print(random_cube(), end='')
 print(str(NUM_CUBES) + '.')
 print(random_cube(True), end='')
+
+print('Total number of letters:', random_letter.num_calls)
