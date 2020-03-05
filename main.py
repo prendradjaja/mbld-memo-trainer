@@ -27,20 +27,25 @@ def random_cube(reverse_order=False):
     parity = random.choice([True, False])
     num_edges = random_even_int(10, 12)
     num_corners = random_even_int(6, 8)
+    num_flips = max(random.randint(-1, 2), 0)
+    num_twists = max(random.randint(-1, 2), 0)
     if parity:
         num_edges += 1
         num_corners += 1
     edges = random_memo(num_edges, EDGE_LETTERS)
     corners = random_memo(num_corners, CORNER_LETTERS)
+    flips = random_memo(num_flips, EDGE_LETTERS)
+    twists = random_memo(num_twists, CORNER_LETTERS)
+    fliptwist_delimiter = '  ~  '
     if not reverse_order:
         return (
-            edges + '\n' +
-            corners + '\n\n'
+            edges   + fliptwist_delimiter + flips  + '\n' +
+            corners + fliptwist_delimiter + twists + '\n\n'
         )
     else:
         return (
-            corners + '\n' +
-            edges + '\n\n'
+            corners + fliptwist_delimiter + twists + '\n' +
+            edges   + fliptwist_delimiter + flips  + '\n\n'
         )
 
 def random_memo(length, letters):
